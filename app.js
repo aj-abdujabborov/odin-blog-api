@@ -9,6 +9,8 @@ const passport = require("passport");
 const compression = require("compression"); // compress responses so that user downloads them faster
 const helmet = require("helmet"); // protection against security vulnerabilities
 const RateLimit = require("express-rate-limit"); // protection against repeated requests
+// Routers
+const apiRouter = require("./routes/api");
 
 // Connect to MongoDB
 async function mongoConnect() {
@@ -54,7 +56,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-  })
+  }),
 );
 app.use(passport.session()); // use session to maintain login status across requests
 
@@ -68,6 +70,7 @@ app.use((req, res, next) => {
 app.get("/", (req, res) => {
   res.send("This be the result.");
 });
+app.use("/api/v1", apiRouter);
 
 // Error-handling
 app.use(function (req, res, next) {
