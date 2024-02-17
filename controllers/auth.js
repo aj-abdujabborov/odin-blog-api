@@ -19,9 +19,8 @@ passport.use(
     };
 
     try {
-      const user = await User.findOne({ username }).exec();
-      // eslint-disable-next-line no-underscore-dangle
-      if (!user || !user._id) return done(null, false, authFailed);
+      const user = await User.findOne({ username }, "+password").exec();
+      if (!user || !user.id) return done(null, false, authFailed);
 
       const match = await bcrypt.compare(password, user.password);
       if (match !== true) return done(null, false, authFailed);
