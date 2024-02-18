@@ -22,7 +22,7 @@ function signIn(req, res, next) {
     { expiresIn: "28800s" },
     (err, token) => {
       if (err) return res.sendStatus(500);
-      return res.json(token);
+      return res.json({ userId: req.user._id, token });
     },
   );
 }
