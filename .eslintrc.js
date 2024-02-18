@@ -19,5 +19,5 @@ module.exports = {
   parserOptions: {
     ecmaVersion: "latest",
   },
-  rules: {},
+  rules: { "no-underscore-dangle": "off" },
 };
