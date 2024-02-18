@@ -15,7 +15,7 @@ passport.use(
   "login",
   new LocalStrategy(async (username, password, done) => {
     const authFailed = {
-      message: "Wrong email or password",
+      msg: "Wrong email or password",
     };
 
     try {
@@ -80,7 +80,11 @@ exports.signUp = [
 ];
 
 exports.logIn = [
-  passport.authenticate("login", { session: false }),
+  passport.authenticate("login", {
+    session: false,
+    failureMessage: true,
+    // failWithError: true,
+  }),
   (req, res, next) => {
     req.user = { username: req.user.username, _id: req.user._id };
     next();
