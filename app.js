@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const compression = require("compression"); // compress responses so that user downloads them faster
 const helmet = require("helmet"); // protection against security vulnerabilities
 const RateLimit = require("express-rate-limit"); // protection against repeated requests
+const cors = require("cors");
 // Routers
 const apiRouter = require("./routes/api");
 
@@ -49,6 +50,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static("./public"));
 
 // Routes
+app.use(cors());
+
 app.get("/", (req, res) => {
   res.send("This be the result.");
 });
@@ -63,6 +66,7 @@ app.use((req, res, next) => {
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   // set locals, only providing error in development
+
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
